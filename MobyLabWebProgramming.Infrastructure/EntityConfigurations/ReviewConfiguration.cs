@@ -14,7 +14,7 @@ namespace MobyLabWebProgramming.Infrastructure.EntityConfigurations
             builder.Property(r => r.Content).HasMaxLength(5000).IsRequired(false);
             builder.Property(r => r.Rating).IsRequired();
             builder.HasOne(r => r.ReviewedProduct).WithMany(p => p.Reviews).HasForeignKey(r => r.ReviewedProductId).HasPrincipalKey(p => p.Id).IsRequired().OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(r => r.User).WithMany(u => u.Reviews).HasForeignKey(r => r.UserId).HasPrincipalKey(u => u.Id).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(r => r.User).WithMany(u => u.Reviews).HasForeignKey(r => r.UserId).HasPrincipalKey(u => u.Id).IsRequired();
         }
 
     }

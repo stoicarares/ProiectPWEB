@@ -38,6 +38,13 @@ namespace MobyLabWebProgramming.Core.Specifications
         public ShoppingCartProjectionSpec(Guid id) : base(id)
         {
         }
+
+        public ShoppingCartProjectionSpec(Guid userId, bool orderByCreatedAt = true) : base(orderByCreatedAt)
+        {
+            Query.Where(e => e.UserId == userId);
+        }
+
+
     }
 
 }

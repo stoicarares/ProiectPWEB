@@ -5,7 +5,7 @@ using MobyLabWebProgramming.Core.Responses;
 
 namespace MobyLabWebProgramming.Infrastructure.Services.Interfaces
 {
-    internal interface IProductService
+    public interface IProductService
     {
         public Task<ServiceResponse<ProductDTO>> GetProduct(Guid id, CancellationToken cancellationToken = default);
         public Task<ServiceResponse<PagedResponse<ProductDTO>>> GetProducts(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);

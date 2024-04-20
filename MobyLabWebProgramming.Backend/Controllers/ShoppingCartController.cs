@@ -1,0 +1,82 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MobyLabWebProgramming.Core.DataTransferObjects;
+using MobyLabWebProgramming.Core.Errors;
+using MobyLabWebProgramming.Core.Requests;
+using MobyLabWebProgramming.Core.Responses;
+using MobyLabWebProgramming.Infrastructure.Authorization;
+using MobyLabWebProgramming.Infrastructure.Extensions;
+using MobyLabWebProgramming.Infrastructure.Services.Interfaces;
+
+namespace MobyLabWebProgramming.Backend.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]/[action]")]
+    public class ShoppingCartController : AuthorizedController
+    {
+        private readonly IShoppingCartService _shoppingCartService;
+
+        public ShoppingCartController(IShoppingCartService shoppingCartService, IUserService userService) : base(userService)
+        {
+            _shoppingCartService = shoppingCartService;
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<RequestResponse<ShoppingCartDTO>>> Get(Guid id)
+        {
+            var currentUser = await GetCurrentUser();
+            if (currentUser.Result != null)
+            {
+                return this.FromServiceResponse(await _shoppingCartService.GetShoppingCart(id));
+            }
+
+            return this.ErrorMessageResult<ShoppingCartDTO>(CommonErrors.UserNotFound);
+        }
+
+        /*[HttpGet]
+        public async Task<ActionResult<RequestResponse<PagedResponse<ShoppingCartDTO>>>> GetPage([FromQuery] PaginationSearchQueryParams pagination)
+        {
+            var currentUser = await GetCurrentUser();
+
+            return currentUser.Result != null ?
+                FromServiceResponse(await _shoppingCartService.GetShoppingCarts(pagination)) :
+                ErrorMessageResult<PagedResponse<ShoppingCartDTO>>(CommonErrors.UserNotFound);
+        }*/
+
+        [HttpPost]
+        public async Task<ActionResult<RequestResponse>> Add([FromBody] ShoppingCartAddDTO item)
+        {
+            var currentUser = await GetCurrentUser();
+            if (currentUser.Result != null && currentUser.Result.Id == item.UserId)
+            {
+                return this.FromServiceResponse(await _shoppingCartService.AddToShoppingCart(item));
+            }
+
+            return this.ErrorMessageResult(CommonErrors.UserNotFound);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<RequestResponse>> Update([FromBody] ShoppingCartUpdateDTO item)
+        {
+            var currentUser = await GetCurrentUser();
+            if (currentUser.Result != null && currentUser.Result.Id == item.UserId)
+            {
+                return this.FromServiceResponse(await _shoppingCartService.UpdateShoppingCart(item));
+            }
+
+            return this.ErrorMessageResult(CommonErrors.UserNotFound);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<RequestResponse>> Delete(Guid id)
+        {
+            var currentUser = await GetCurrentUser();
+            if (currentUser.Result != null)
+            {
+                return this.FromServiceResponse(await _shoppingCartService.DeleteShoppingCart(id));
+            }
+
+            return this.ErrorMessageResult(CommonErrors.UserNotFound);
+        }
+    }
+}

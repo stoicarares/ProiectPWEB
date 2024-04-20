@@ -10,4 +10,7 @@ public static class CommonErrors
     public static ErrorMessage UserNotFound => new(HttpStatusCode.NotFound, "User doesn't exist!", ErrorCodes.EntityNotFound);
     public static ErrorMessage FileNotFound => new(HttpStatusCode.NotFound, "File not found on disk!", ErrorCodes.PhysicalFileNotFound);
     public static ErrorMessage TechnicalSupport => new(HttpStatusCode.InternalServerError, "An unknown error occurred, contact the technical support!", ErrorCodes.TechnicalError);
+    public static ErrorMessage ProductNotFound => new(HttpStatusCode.InternalServerError, "Product not found!", ErrorCodes.ProductNotFound);
+    public static ErrorMessage ReviewNotFound => new(HttpStatusCode.InternalServerError, "Review not found!", ErrorCodes.ReviewNotFound);
+    public static ErrorMessage ShoppingCartNotFound => new(HttpStatusCode.InternalServerError, "Shopping cart not found!", ErrorCodes.ShoppingCartNotFound);
 }

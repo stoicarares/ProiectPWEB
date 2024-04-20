@@ -41,5 +41,19 @@ namespace MobyLabWebProgramming.Core.Specifications
         public ReviewProjectionSpec(Guid id) : base(id)
         {
         }
+
+        public ReviewProjectionSpec(string? search)
+        {
+            search = !string.IsNullOrWhiteSpace(search) ? search.Trim() : null;
+
+            if (search == null)
+            {
+                return;
+            }
+
+            var searchExpr = $"%{search.Replace(" ", "%")}%";
+
+            Query.Where(e => EF.Functions.ILike(e.Title, searchExpr));
+        }
     }
 }

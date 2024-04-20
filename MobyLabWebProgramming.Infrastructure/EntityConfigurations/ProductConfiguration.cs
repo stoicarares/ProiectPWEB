@@ -16,7 +16,7 @@ namespace MobyLabWebProgramming.Infrastructure.EntityConfigurations
             builder.Property(p => p.Price).IsRequired();
             builder.Property(p => p.CreatedAt).IsRequired();
             builder.Property(p => p.UpdatedAt).IsRequired();
-            builder.HasMany(p => p.Reviews).WithOne(r => r.ReviewedProduct).HasPrincipalKey(p => p.Id).HasForeignKey(r => r.ReviewedProductId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(p => p.Reviews).WithOne(r => r.ReviewedProduct).HasPrincipalKey(p => p.Id).HasForeignKey(r => r.ReviewedProductId).IsRequired();
             builder.HasMany(p => p.ShoppingCarts).WithMany(sc => sc.Products);
         }   
     }

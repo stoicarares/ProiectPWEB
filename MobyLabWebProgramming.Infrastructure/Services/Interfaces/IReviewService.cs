@@ -4,7 +4,7 @@ using MobyLabWebProgramming.Core.Responses;
 
 namespace MobyLabWebProgramming.Infrastructure.Services.Interfaces
 {
-    internal interface IReviewService
+    public interface IReviewService
     {
         public Task<ServiceResponse<ReviewDTO>> GetReview(Guid id, CancellationToken cancellationToken = default);
         public Task<ServiceResponse<PagedResponse<ReviewDTO>>> GetReviews(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
