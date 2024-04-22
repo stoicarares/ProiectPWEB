@@ -19,7 +19,7 @@ public class User : BaseEntity
     /// </summary>
     public ICollection<UserFile> UserFiles { get; set; } = default!;
     public ShoppingCart ShoppingCart { get; set; } = default!;
-    public Guid ShoppingCartId { get; set; }
+   // public Guid ShoppingCartId { get; set; }
     public ICollection<Review> Reviews { get; set; } = default!;
 
 }

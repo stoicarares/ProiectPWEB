@@ -20,5 +20,6 @@ public enum ErrorCodes
     MailSendFailed,
     ProductNotFound,
     ReviewNotFound,
-    ShoppingCartNotFound
+    ShoppingCartNotFound,
+    Unauthorized,
 }

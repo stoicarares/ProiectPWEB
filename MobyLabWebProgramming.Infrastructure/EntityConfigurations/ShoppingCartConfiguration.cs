@@ -14,8 +14,10 @@ namespace MobyLabWebProgramming.Infrastructure.EntityConfigurations
             builder.Property(sc => sc.CreatedAt).IsRequired();
             builder.Property(sc => sc.UpdatedAt).IsRequired();
             builder.HasMany(sc => sc.Products).WithMany(p => p.ShoppingCarts);
-            builder.HasIndex(builder => builder.UserId).IsUnique();
-            builder.HasOne(sc => sc.User).WithOne(u => u.ShoppingCart).HasForeignKey<User>(u => u.ShoppingCartId).HasPrincipalKey<ShoppingCart>(sc => sc.Id).IsRequired();
+            builder.HasOne(sc => sc.User)
+                .WithOne(u => u.ShoppingCart)
+                .HasPrincipalKey<ShoppingCart>(sc => sc.Id)
+                .IsRequired();
         }
     }
 }

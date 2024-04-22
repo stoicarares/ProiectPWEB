@@ -156,18 +156,12 @@ namespace MobyLabWebProgramming.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<Guid>("ShoppingCartId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Email");
-
-                    b.HasIndex("ShoppingCartId")
-                        .IsUnique();
 
                     b.ToTable("User");
                 });

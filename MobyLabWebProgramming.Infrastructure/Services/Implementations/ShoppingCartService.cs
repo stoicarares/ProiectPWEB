@@ -63,7 +63,7 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
                 {
                     UserId = shoppingCart.UserId,
                     Products = new List<Product> { product },
-                    TotalPrice = product.Price // Assuming initial total price is the price of the added product
+                    TotalPrice = product.Price * product.Quantity // Assuming initial total price is the price of the added product
                 };
 
                 await _repository.AddAsync(newShoppingCart, cancellationToken);

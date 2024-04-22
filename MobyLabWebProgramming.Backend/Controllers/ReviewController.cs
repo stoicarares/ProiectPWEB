@@ -21,26 +21,16 @@ namespace MobyLabWebProgramming.Backend.Controllers
             _reviewService = reviewService;
         }
 
-        [Authorize]
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<RequestResponse<ReviewDTO>>> GetById(Guid id)
         {
-            var currentUser = await GetCurrentUser();
-
-            return currentUser.Result != null ?
-                this.FromServiceResponse(await _reviewService.GetReview(id)) :
-                this.ErrorMessageResult<ReviewDTO>(currentUser.Error);
+            return this.FromServiceResponse(await _reviewService.GetReview(id));
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<RequestResponse<PagedResponse<ReviewDTO>>>> GetPage([FromQuery] PaginationSearchQueryParams pagination)
         {
-            var currentUser = await GetCurrentUser();
-
-            return currentUser.Result != null ?
-                this.FromServiceResponse(await _reviewService.GetReviews(pagination)) :
-                this.ErrorMessageResult<PagedResponse<ReviewDTO>>(currentUser.Error);
+            return this.FromServiceResponse(await _reviewService.GetReviews(pagination));
         }
 
         [Authorize]

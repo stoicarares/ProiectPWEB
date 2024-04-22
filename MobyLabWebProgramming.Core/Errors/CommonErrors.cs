@@ -13,4 +13,5 @@ public static class CommonErrors
     public static ErrorMessage ProductNotFound => new(HttpStatusCode.InternalServerError, "Product not found!", ErrorCodes.ProductNotFound);
     public static ErrorMessage ReviewNotFound => new(HttpStatusCode.InternalServerError, "Review not found!", ErrorCodes.ReviewNotFound);
     public static ErrorMessage ShoppingCartNotFound => new(HttpStatusCode.InternalServerError, "Shopping cart not found!", ErrorCodes.ShoppingCartNotFound);
+    public static ErrorMessage Unauthorized => new(HttpStatusCode.Unauthorized, "Unauthorized access!", ErrorCodes.Unauthorized);
 }

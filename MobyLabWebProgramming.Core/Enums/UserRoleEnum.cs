@@ -20,4 +20,16 @@ public sealed class UserRoleEnum : SmartEnum<UserRoleEnum, string>
     private UserRoleEnum(string name, string value) : base(name, value)
     {
     }
+
+    public static UserRoleEnum? ParseOrNull(string value)
+    {
+        foreach (var enumValue in UserRoleEnum.List)
+        {
+            if (enumValue.ToString().Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return enumValue;
+            }
+        }
+        return null;
+    }
 }

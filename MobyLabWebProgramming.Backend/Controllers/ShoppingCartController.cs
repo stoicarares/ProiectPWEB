@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MobyLabWebProgramming.Core.DataTransferObjects;
+using MobyLabWebProgramming.Core.Enums;
 using MobyLabWebProgramming.Core.Errors;
 using MobyLabWebProgramming.Core.Requests;
 using MobyLabWebProgramming.Core.Responses;
@@ -21,6 +22,7 @@ namespace MobyLabWebProgramming.Backend.Controllers
             _shoppingCartService = shoppingCartService;
         }
 
+        [Authorize]
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<RequestResponse<ShoppingCartDTO>>> Get(Guid id)
         {
@@ -33,21 +35,12 @@ namespace MobyLabWebProgramming.Backend.Controllers
             return this.ErrorMessageResult<ShoppingCartDTO>(CommonErrors.UserNotFound);
         }
 
-        /*[HttpGet]
-        public async Task<ActionResult<RequestResponse<PagedResponse<ShoppingCartDTO>>>> GetPage([FromQuery] PaginationSearchQueryParams pagination)
-        {
-            var currentUser = await GetCurrentUser();
-
-            return currentUser.Result != null ?
-                FromServiceResponse(await _shoppingCartService.GetShoppingCarts(pagination)) :
-                ErrorMessageResult<PagedResponse<ShoppingCartDTO>>(CommonErrors.UserNotFound);
-        }*/
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<RequestResponse>> Add([FromBody] ShoppingCartAddDTO item)
         {
             var currentUser = await GetCurrentUser();
-            if (currentUser.Result != null && currentUser.Result.Id == item.UserId)
+            if (currentUser.Result != null && (currentUser.Result.Id == item.UserId || currentUser.Result.Role == UserRoleEnum.Admin))
             {
                 return this.FromServiceResponse(await _shoppingCartService.AddToShoppingCart(item));
             }
@@ -55,6 +48,7 @@ namespace MobyLabWebProgramming.Backend.Controllers
             return this.ErrorMessageResult(CommonErrors.UserNotFound);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<RequestResponse>> Update([FromBody] ShoppingCartUpdateDTO item)
         {
@@ -67,16 +61,11 @@ namespace MobyLabWebProgramming.Backend.Controllers
             return this.ErrorMessageResult(CommonErrors.UserNotFound);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<RequestResponse>> Delete(Guid id)
         {
-            var currentUser = await GetCurrentUser();
-            if (currentUser.Result != null)
-            {
-                return this.FromServiceResponse(await _shoppingCartService.DeleteShoppingCart(id));
-            }
-
-            return this.ErrorMessageResult(CommonErrors.UserNotFound);
+            return this.FromServiceResponse(await _shoppingCartService.DeleteShoppingCart(id));
         }
     }
 }

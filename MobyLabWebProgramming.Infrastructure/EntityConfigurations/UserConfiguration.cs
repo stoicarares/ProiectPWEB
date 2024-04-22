@@ -34,7 +34,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(e => e.UpdatedAt)
             .IsRequired();
 
-        builder.HasIndex(e => e.ShoppingCartId).IsUnique();
+        //builder.HasIndex(e => e.ShoppingCartId).IsUnique();
         builder.HasOne(e => e.ShoppingCart)
             .WithOne(sc => sc.User)
             .HasForeignKey<ShoppingCart>(sc => sc.UserId)

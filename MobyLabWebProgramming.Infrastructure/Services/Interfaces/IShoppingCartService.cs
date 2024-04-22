@@ -8,7 +8,6 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Interfaces
     {
 
         public Task<ServiceResponse<ShoppingCartDTO>> GetShoppingCart(Guid id, CancellationToken cancellationToken = default);
-        //public Task<ServiceResponse<PagedResponse<ShoppingCartDTO>>> GetShoppingCarts(PaginationSearchQueryParams pagination, CancellationToken cancellationToken = default);
         public Task<ServiceResponse> AddToShoppingCart(ShoppingCartAddDTO shoppingCart, CancellationToken cancellationToken = default);
         public Task<ServiceResponse> UpdateShoppingCart(ShoppingCartUpdateDTO shoppingCart, CancellationToken cancellationToken = default);
         public Task<ServiceResponse> DeleteShoppingCart(Guid id, CancellationToken cancellationToken = default);

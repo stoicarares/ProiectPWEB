@@ -91,13 +91,24 @@ public class UserService : IUserService
             return ServiceResponse.FromError(new(HttpStatusCode.Conflict, "The user already exists!", ErrorCodes.UserAlreadyExists));
         }
 
-        await _repository.AddAsync(new User
+
+        //var shoppingCart = await _repository.GetAsync(new ShoppingCartSpec(user.Email), cancellationToken); // Get the shopping cart of the user.
+        var newUser = new User
         {
             Email = user.Email,
             Name = user.Name,
             Role = user.Role,
             Password = user.Password
-        }, cancellationToken); // A new entity is created and persisted in the database.
+        };
+        await _repository.AddAsync(newUser, cancellationToken); // A new entity is created and persisted in the database.
+        var shoppingCart = new ShoppingCart
+        {
+            TotalPrice = 0,
+            Products = new List<Product>(),
+            UserId = newUser.Id
+        };
+
+        await _repository.AddAsync(shoppingCart, cancellationToken);
 
         await _mailService.SendMail(user.Email, "Welcome!", MailTemplates.UserAddTemplate(user.Name), true, "My App", cancellationToken); // You can send a notification on the user email. Change the email if you want.
 
