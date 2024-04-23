@@ -22,4 +22,5 @@ public enum ErrorCodes
     ReviewNotFound,
     ShoppingCartNotFound,
     Unauthorized,
+    AddressNotFound
 }

@@ -21,5 +21,6 @@ public class User : BaseEntity
     public ShoppingCart ShoppingCart { get; set; } = default!;
    // public Guid ShoppingCartId { get; set; }
     public ICollection<Review> Reviews { get; set; } = default!;
+    public ICollection<Address> Addresses { get; set; } = default!;
 
 }
