@@ -39,4 +39,42 @@ public static class MailTemplates
     </table>
 </body>
 </html>";
+
+    public static string OrderCompletionTemplate(string name) => $@"<!DOCTYPE html>
+<html lang=""en"" xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+    <meta charset=""utf-8"" />
+    <title>Order Completion</title>
+    <style type=""text/css"">
+        p {{
+            margin: 0 0 5px 0;
+        }}
+    </style>
+</head>
+<body>
+    <table style=""border: none; height: auto;"" border=""0"" width=""676"" cellspacing=""0"" cellpadding=""10"" align=""center"" bgcolor=""#FFFFFF"">
+        <tbody>
+            <tr style=""height: 19px;"">
+                <td style=""background: #ffffff; color: #000000; width: 660px; height: auto;"" align=""left"" valign=""top"" bgcolor=""#ffffff"">
+                    <p style=""font-size: 15px; margin: 0px; color: #003373; letter-spacing: 0.5px;""><strong>Dear Mr./Ms. {name},</strong></p>
+                </td>
+            </tr>
+            <tr style=""height: auto;"">
+                <td style=""background: #ffffff; color: #000000; height: auto; width: 660px;"" align=""left"" valign=""top"" bgcolor=""#ffffff"">
+                    <table style=""border-top: 2px solid #3c87be; width: 660px;"" border=""0"" cellspacing=""0"" cellpadding=""10"">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Your order has been completed successfully!</p>
+                                    <p>Thank you for shopping with us.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>";
 }

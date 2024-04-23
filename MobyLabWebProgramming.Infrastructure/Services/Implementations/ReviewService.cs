@@ -36,14 +36,14 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
             return ServiceResponse<PagedResponse<ReviewDTO>>.ForSuccess(result);
         }
 
-        public async Task<ServiceResponse> AddReview(ReviewAddDTO review, CancellationToken cancellationToken = default)
+        public async Task<ServiceResponse> AddReview(ReviewAddDTO review, Guid userId, CancellationToken cancellationToken = default)
         {
             await _repository.AddAsync(new Review
             {
                 Title = review.Title,
                 Content = review.Content,
                 Rating = review.Rating,
-                UserId = review.UserId,
+                UserId = userId,
                 ReviewedProductId = review.ProductId,
             }, cancellationToken);
 

@@ -177,7 +177,8 @@ public static class WebApplicationBuilderExtensions
             .AddTransient<IProductService, ProductService>()
             .AddTransient<IReviewService, ReviewService>()
             .AddTransient<IShoppingCartService, ShoppingCartService>()
-            .AddTransient<IAddressService, AddressService>();
+            .AddTransient<IAddressService, AddressService>()
+            .AddTransient<IOrderService, OrderService>();
             
 
         return builder;

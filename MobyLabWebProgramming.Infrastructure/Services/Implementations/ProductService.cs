@@ -77,5 +77,28 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
             await _repository.DeleteAsync<Product>(id, cancellationToken);
             return ServiceResponse.ForSuccess();
         }
+
+        public async Task<ServiceResponse> DecreaseStock(Guid productId, int quantity, CancellationToken cancellationToken = default)
+        {
+            var product = await _repository.GetAsync(new ProductSpec(productId), cancellationToken);
+
+            if (product != null)
+            {
+                if (product.Stock >= quantity)
+                {
+                    product.Stock -= quantity;
+                    await _repository.UpdateAsync(product, cancellationToken);
+                    return ServiceResponse.ForSuccess();
+                }
+                else
+                {
+                    return ServiceResponse.FromError(CommonErrors.InsufficientStock);
+                }
+            }
+            else
+            {
+                return ServiceResponse.FromError(CommonErrors.ProductNotFound);
+            }
+        }
     }
 }

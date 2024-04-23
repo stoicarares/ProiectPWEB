@@ -40,7 +40,7 @@ namespace MobyLabWebProgramming.Backend.Controllers
             var currentUser = await GetCurrentUser();
 
             return currentUser.Result != null ?
-                this.FromServiceResponse(await _reviewService.AddReview(review)) :
+                this.FromServiceResponse(await _reviewService.AddReview(review, currentUser.Result.Id)) :
                 this.ErrorMessageResult(currentUser.Error);
         }
 

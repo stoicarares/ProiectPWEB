@@ -8,6 +8,7 @@ using MobyLabWebProgramming.Core.Requests;
 using MobyLabWebProgramming.Core.Responses;
 using MobyLabWebProgramming.Core.Specifications;
 using MobyLabWebProgramming.Infrastructure.Database;
+using MobyLabWebProgramming.Infrastructure.Repositories.Implementation;
 using MobyLabWebProgramming.Infrastructure.Repositories.Interfaces;
 using MobyLabWebProgramming.Infrastructure.Services.Interfaces;
 
@@ -36,9 +37,9 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
             return ServiceResponse<PagedResponse<ShoppingCartDTO>>.ForSuccess(result);
         }*/
 
-        public async Task<ServiceResponse> AddToShoppingCart(ShoppingCartAddDTO shoppingCart, CancellationToken cancellationToken = default)
+        public async Task<ServiceResponse> AddToShoppingCart(ShoppingCartAddDTO shoppingCart, Guid shoppingCartId, CancellationToken cancellationToken = default)
         {
-            var existingCart = await _repository.GetAsync(new ShoppingCartSpec(shoppingCart.UserId), cancellationToken);
+            var existingCart = await _repository.GetAsync(new ShoppingCartSpec(shoppingCartId), cancellationToken);
 
             if (existingCart != null)
             {
@@ -48,7 +49,13 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
                     return ServiceResponse.FromError(CommonErrors.ProductNotFound);
                 }
 
+                if (existingCart.Products == null)
+                {
+                    existingCart.Products = new List<Product>();
+                }
+
                 existingCart.Products.Add(product);
+                existingCart.TotalPrice += product.Price * shoppingCart.Quantity;
                 await _repository.UpdateAsync(existingCart, cancellationToken);
             }
             else
@@ -91,5 +98,28 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Implementations
             await _repository.DeleteAsync<ShoppingCart>(id, cancellationToken);
             return ServiceResponse.ForSuccess();
         }
+        public async Task<ServiceResponse> ClearShoppingCart(Guid shoppingCartId, CancellationToken cancellationToken = default)
+        {
+            var existingCart = await _repository.GetAsync(new ShoppingCartSpec(shoppingCartId), cancellationToken);
+
+            if (existingCart != null)
+            {
+                if (existingCart.Products != null)
+                {
+                    existingCart.Products.Clear();
+                }
+                else
+                {
+                    existingCart.Products = new List<Product>(); // Ensure Products property is initialized
+                }
+
+                existingCart.TotalPrice = 0;
+                await _repository.UpdateAsync(existingCart, cancellationToken);
+                return ServiceResponse.ForSuccess();
+            }
+
+            return ServiceResponse.FromError(CommonErrors.ShoppingCartNotFound);
+        }
     }
+
 }

@@ -12,5 +12,7 @@ namespace MobyLabWebProgramming.Infrastructure.Services.Interfaces
         public Task<ServiceResponse> AddProduct(ProductAddDTO product, CancellationToken cancellationToken = default);
         public Task<ServiceResponse> UpdateProduct(ProductUpdateDTO product, CancellationToken cancellationToken = default);
         public Task<ServiceResponse> DeleteProduct(Guid id, CancellationToken cancellationToken = default);
+        public Task<ServiceResponse> DecreaseStock(Guid productId, int quantity, CancellationToken cancellationToken = default);
+
     }
 }

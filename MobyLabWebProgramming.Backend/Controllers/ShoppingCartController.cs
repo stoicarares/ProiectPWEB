@@ -42,7 +42,7 @@ namespace MobyLabWebProgramming.Backend.Controllers
             var currentUser = await GetCurrentUser();
             if (currentUser.Result != null && (currentUser.Result.Id == item.UserId || currentUser.Result.Role == UserRoleEnum.Admin))
             {
-                return this.FromServiceResponse(await _shoppingCartService.AddToShoppingCart(item));
+                return this.FromServiceResponse(await _shoppingCartService.AddToShoppingCart(item, currentUser.Result.ShoppingCart.Id));
             }
 
             return this.ErrorMessageResult(CommonErrors.UserNotFound);

@@ -15,4 +15,7 @@ public static class CommonErrors
     public static ErrorMessage ShoppingCartNotFound => new(HttpStatusCode.InternalServerError, "Shopping cart not found!", ErrorCodes.ShoppingCartNotFound);
     public static ErrorMessage Unauthorized => new(HttpStatusCode.Unauthorized, "Unauthorized access!", ErrorCodes.Unauthorized);
     public static ErrorMessage AddressNotFound => new(HttpStatusCode.NotFound, "Address not found", ErrorCodes.AddressNotFound);
+    public static ErrorMessage OrderNotFound => new(HttpStatusCode.NotFound, "Order not found", ErrorCodes.OrderNotFound);
+    public static ErrorMessage ShoppingCartEmpty => new(HttpStatusCode.BadRequest, "Shopping cart is empty!", ErrorCodes.ShoppingCartEmpty);
+    public static ErrorMessage InsufficientStock => new(HttpStatusCode.BadRequest, "Insufficient stock for the requested quantity!", ErrorCodes.InsufficientStock);
 }

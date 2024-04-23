@@ -64,9 +64,9 @@ public class UserController : AuthorizedController // Here we use the Authorized
         var currentUser = await GetCurrentUser();
         user.Password = PasswordUtils.HashPassword(user.Password);
 
-        return currentUser.Result != null ?
-            this.FromServiceResponse(await UserService.AddUser(user, currentUser.Result)) :
-            this.ErrorMessageResult(currentUser.Error);
+        return //currentUser.Result != null ?
+            this.FromServiceResponse(await UserService.AddUser(user, currentUser.Result));// :
+            //this.ErrorMessageResult(currentUser.Error);
     }
 
     /// <summary>
